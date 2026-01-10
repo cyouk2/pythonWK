@@ -1,5 +1,6 @@
 /.vscode
 /config.ini
 /test_1.py
+/*.jpg
 /__pycache__
 test_EVA15.py
