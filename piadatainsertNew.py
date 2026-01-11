@@ -78,7 +78,7 @@ class SalesforceAccessNew:
         obj = {
             'beans':beans
         }
-        print(obj)
+        # print(obj)
         json_data = json.dumps(obj)
         res_get = requests.post(url=strUrl, headers=self.headers, data=json_data, timeout=10)
         print(res_get.json())

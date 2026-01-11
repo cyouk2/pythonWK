@@ -132,23 +132,15 @@ class matploitTempTest02:
         # print(dfbean)
         listFor585 =[]
         for row in dfbean.itertuples():
-            result = (
-                row.Name,
-                row.mean,
-                row.std,
-                row.mean_std,
-                row.max,
-                row.count
-            )
             bean ={}
             bean['Name'] = row.Name
             bean['data1'] = row.mean
             bean['data2'] = row.std
             bean['data3'] = row.mean_std
             bean['data4'] = row.max
-            # bean['data5'] = row.count
+            bean['data5'] = row.count
             listFor585.append(str(bean))
-            print(result)
+            # print(result)
             # listFor585.append(result)
 
         # SalesforceAccess
