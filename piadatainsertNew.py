@@ -60,25 +60,25 @@ class SalesforceAccessNew:
         res_get = requests.post(url=strUrl, headers=self.headers, data=json_data, timeout=10)
         print(res_get.json())
 
-    def piadataupdatebk2(self,df):
+    def piadataupdatebk2(self,beans):
         
         services_url = '/services/apexrest/piadataupdatebk2/'
         strUrl = self.instance_url + services_url
         # adate  Name  asort  kaiten  atype  aren  asortbk
-        beans =[]
-        for row in df:
-            bean ={}
-            bean['Name'] = int(row[0])
-            bean['data1'] = int(row[1])
-            bean['data2'] = int(row[2])
-            bean['data3'] = int(row[3])
-            bean['data4'] = int(row[4])
-            bean['data5'] = int(row[5])
-            beans.append(bean)
+        # beans =[]
+        # for row in df:
+        #     bean ={}
+        #     bean['Name'] = int(row[0])
+        #     bean['data1'] = int(row[1])
+        #     bean['data2'] = int(row[2])
+        #     bean['data3'] = int(row[3])
+        #     bean['data4'] = int(row[4])
+        #     bean['data5'] = int(row[5])
+        #     beans.append(str(bean))
         obj = {
             'beans':beans
         }
-        # print(obj)
+        print(obj)
         json_data = json.dumps(obj)
         res_get = requests.post(url=strUrl, headers=self.headers, data=json_data, timeout=10)
         print(res_get.json())

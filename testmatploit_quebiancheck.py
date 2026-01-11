@@ -140,8 +140,16 @@ class matploitTempTest02:
                 row.max,
                 row.count
             )
+            bean ={}
+            bean['Name'] = row.Name
+            bean['data1'] = row.mean
+            bean['data2'] = row.std
+            bean['data3'] = row.mean_std
+            bean['data4'] = row.max
+            # bean['data5'] = row.count
+            listFor585.append(str(bean))
             print(result)
-            listFor585.append(result)
+            # listFor585.append(result)
 
         # SalesforceAccess
         
