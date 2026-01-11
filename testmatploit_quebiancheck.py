@@ -81,7 +81,7 @@ class matploitTempTest02:
         # print(rows2)
         return df_reset
         
-    def getRen(self,cntbig,cntsmall,flg):
+    def getRen(self,startIndex,endIndex,flg):
 
         bean ={}
         bean['Name'] = []
@@ -91,16 +91,27 @@ class matploitTempTest02:
         bean['max'] = []
         bean['count'] = []
         
-        adateEnd = self.getFormatDate(cntbig)
-        adateStart =  self.getFormatDate(cntsmall)
-        print(f"date: {adateStart} ~ {adateEnd}")
+        
         rang1 = range(585,613)
         if flg == 15:
             rang1 = range(697,725)
 
         for indexTaiNo4 in rang1:
-
+            
             df = self.processData(indexTaiNo4)
+            
+            dfgroupbybk = df.copy().groupby('adate', as_index=False).agg('max')
+          
+            
+            dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex:]['adate']
+            if startIndex != 0:
+                dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex : -1 * startIndex]['adate']
+            print(dfgroupbybkadatebk)
+
+            adateEnd = dfgroupbybkadatebk.max()
+            adateStart =  dfgroupbybkadatebk.min()
+
+            print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd}")
 
             df = df.query(f'adate >= {adateStart} and adate <= {adateEnd}')
 
@@ -146,7 +157,7 @@ class matploitTempTest02:
 if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
-    dateS = 1
-    detaE = dateS + 2
-    piaDB.getRen(dateS,detaE,17)
+    dateS = 0
+    detaE = (dateS + 1) + 1
+    piaDB.getRen(dateS,detaE,15)
     # piaDB.pltShow(592,350,adate)
