@@ -106,7 +106,7 @@ class matploitTempTest02:
             dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex:]['adate']
             if startIndex != 0:
                 dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex : -1 * startIndex]['adate']
-            print(dfgroupbybkadatebk)
+            # print(dfgroupbybkadatebk)
 
             adateEnd = dfgroupbybkadatebk.max()
             adateStart =  dfgroupbybkadatebk.min()
@@ -116,8 +116,6 @@ class matploitTempTest02:
             df = df.query(f'adate >= {adateStart} and adate <= {adateEnd}')
 
             df_kaiten = df['kaiten']
-
-            # print(df_kaiten)
             mean = round(df_kaiten.mean(),0)
             std = round(df_kaiten.std(),0)
 
@@ -159,5 +157,5 @@ if __name__ == '__main__':
     piaDB = matploitTempTest02()
     dateS = 0
     detaE = (dateS + 1) + 1
-    piaDB.getRen(dateS,detaE,15)
+    piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)
