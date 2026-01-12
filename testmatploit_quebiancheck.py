@@ -143,10 +143,10 @@ class matploitTempTest02:
         # SalesforceAccess
         
         if flg == 15:
-            sa2 = SalesforceAccessNew(711)
+            sa2 = SalesforceAccessNew('EVA15')
             sa2.piadataupdatebk2(listFor585)
         else:
-            sa2 = SalesforceAccessNew(585)
+            sa2 = SalesforceAccessNew('EVA17')
             sa2.piadataupdatebk2(listFor585)
         
 if __name__ == '__main__':

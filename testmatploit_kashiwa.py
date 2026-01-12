@@ -119,7 +119,7 @@ class matploitTempTest:
             #     continue
             listFor585.append(self.processData(indexTaiNo4,cntbig,cntsmall,adate))
         # salesforce连携
-        sa2 = SalesforceAccessNew(585)
+        sa2 = SalesforceAccessNew('EVA17')
         if isToday == 1:
             sa2.piadataupdatebk2(listFor585)
         # if isToday == 2:

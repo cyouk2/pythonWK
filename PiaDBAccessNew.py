@@ -56,13 +56,13 @@ class PiaDBNew:
 
     def getRen(self, adateTmp, flg):
         if flg == 1:
-            sa1 = SalesforceAccessNew(697)
+            sa1 = SalesforceAccessNew('EVA15')
             for indexTaiNo1 in range(697,725):
                 df1 = self.countRenSub(indexTaiNo1, adateTmp)
                 # salesforce连携
                 sa1.main(df1)
         if flg == 2:
-            sa2 = SalesforceAccessNew(585)
+            sa2 = SalesforceAccessNew('EVA17')
             for indexTaiNo2 in range(585,613):
                 # salesforce连携
                 df2 = self.countRenSub(indexTaiNo2, adateTmp)

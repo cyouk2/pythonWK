@@ -5,18 +5,13 @@ import requests
 import configparser
 
 class SalesforceAccessNew:
-    def __init__(self,taino):
+    def __init__(self, database):
         ssl._create_default_https_context = ssl._create_unverified_context
         HOST = 'login.salesforce.com'
 
         config = configparser.ConfigParser()
         config.read('config.ini',encoding='utf-8')
-        database = 'EVA17'
-        if taino >= 697:
-            database = 'EVA15'
-            
         print(database)
-
         params = {
             'grant_type': 'password',
             'client_id': config.get(database,'client_id'),
@@ -64,7 +59,7 @@ class SalesforceAccessNew:
         
         services_url = '/services/apexrest/piadataupdatebk2/'
         strUrl = self.instance_url + services_url
-        
+
         obj = {
             'beans':beans
         }
