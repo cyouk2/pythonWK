@@ -157,5 +157,5 @@ if __name__ == '__main__':
     piaDB = matploitTempTest02()
     dateS = 0
     detaE = (dateS + 1) + 1
-    piaDB.getRen(dateS,detaE,17)
+    piaDB.getRen(dateS,detaE,15)
     # piaDB.pltShow(592,350,adate)
