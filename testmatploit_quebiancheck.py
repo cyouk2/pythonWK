@@ -111,7 +111,7 @@ class matploitTempTest02:
             adateEnd = dfgroupbybkadatebk.max()
             adateStart =  dfgroupbybkadatebk.min()
 
-            print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd}")
+            # print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd}")
 
             df = df.query(f'adate >= {adateStart} and adate <= {adateEnd}')
 
@@ -125,10 +125,10 @@ class matploitTempTest02:
             bean['max'].append(df_kaiten.max())
             bean['count'].append(df_kaiten.count())
             bean['mean_std'].append(mean + std)
-           
+            print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd},count:{df_kaiten.count()},mean + std:{mean + std}")
+
+        # DataFrameへ変更
         dfbean = pd.DataFrame(bean)
-        
-        # dfbean = dfbean.copy().sort_values(by='mean_std', ascending=True)
         # print(dfbean)
         listFor585 =[]
         for row in dfbean.itertuples():
@@ -140,9 +140,6 @@ class matploitTempTest02:
             bean['data4'] = row.max
             bean['data5'] = row.count
             listFor585.append(str(bean))
-            # print(result)
-            # listFor585.append(result)
-
         # SalesforceAccess
         
         if flg == 15:
@@ -157,5 +154,5 @@ if __name__ == '__main__':
     piaDB = matploitTempTest02()
     dateS = 0
     detaE = (dateS + 1) + 1
-    piaDB.getRen(dateS,detaE,15)
+    piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)

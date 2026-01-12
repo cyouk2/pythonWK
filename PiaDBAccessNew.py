@@ -71,4 +71,4 @@ class PiaDBNew:
 if __name__ == '__main__':  
     piaDB = PiaDBNew()
     # piaDB.countRenSub(724, 260102)
-    piaDB.getRen(260108,2)
+    piaDB.getRen(260111,2)
