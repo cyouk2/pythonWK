@@ -125,7 +125,7 @@ class matploitTempTest02:
             bean['max'].append(df_kaiten.max())
             bean['count'].append(df_kaiten.count())
             bean['mean_std'].append(mean + std)
-            print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd},count:{df_kaiten.count()},mean + std:{mean + std}")
+            print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd},count:{df_kaiten.count()},mean_std:{mean + std}")
 
         # DataFrameへ変更
         dfbean = pd.DataFrame(bean)
@@ -153,6 +153,6 @@ if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
     dateS = 0
-    detaE = (dateS + 1) + 1
-    piaDB.getRen(dateS,detaE,17)
+    detaE = (dateS + 1) + 2
+    piaDB.getRen(dateS,detaE,15)
     # piaDB.pltShow(592,350,adate)
