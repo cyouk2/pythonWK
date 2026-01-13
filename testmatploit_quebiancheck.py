@@ -100,12 +100,11 @@ class matploitTempTest02:
             
             df = self.processData(indexTaiNo4)
             
-            dfgroupbybk = df.copy().groupby('adate', as_index=False).agg('max')
-          
-            
-            dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex:]['adate']
+            dfgroupbybk = df.copy().groupby('adate', as_index=False).agg('max').sort_values(by='adate', ascending=False)
+
+            dfgroupbybkadatebk = dfgroupbybk[0:endIndex]['adate']
             if startIndex != 0:
-                dfgroupbybkadatebk = dfgroupbybk[-1 * endIndex : -1 * startIndex]['adate']
+                dfgroupbybkadatebk = dfgroupbybk[startIndex:endIndex]['adate']
             # print(dfgroupbybkadatebk)
 
             adateEnd = dfgroupbybkadatebk.max()
@@ -134,11 +133,11 @@ class matploitTempTest02:
         for row in dfbean.itertuples():
             bean ={}
             bean['Name'] = row.Name
-            bean['data1'] = row.mean
-            bean['data2'] = row.std
-            bean['data3'] = row.mean_std
-            bean['data4'] = row.max
-            bean['data5'] = row.count
+            # bean['data1'] = row.mean
+            # bean['data2'] = row.mean_std
+            bean['data3'] = row.mean
+            bean['data4'] = row.mean_std
+            # bean['data5'] = row.count
             listFor585.append(str(bean))
         # SalesforceAccess
         
@@ -153,6 +152,6 @@ if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
     dateS = 0
-    detaE = (dateS + 1) + 2
-    piaDB.getRen(dateS,detaE,15)
+    detaE = (dateS + 1) + 1
+    piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)
