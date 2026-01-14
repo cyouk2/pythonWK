@@ -102,7 +102,7 @@ class matploitTempTest02:
             
             dfgroupbybk = df.copy().groupby('adate', as_index=False).agg('max').sort_values(by='adate', ascending=False)
 
-            dfgroupbybkadatebk = dfgroupbybk[0:endIndex]['adate']
+            dfgroupbybkadatebk = dfgroupbybk[startIndex:endIndex]['adate']
             # if startIndex != 0:
             #     dfgroupbybkadatebk = dfgroupbybk[startIndex:endIndex]['adate']
             # print(dfgroupbybkadatebk)
@@ -134,7 +134,7 @@ class matploitTempTest02:
             bean ={}
             bean['Name'] = row.Name
             # bean['data3'] = row.mean
-            bean['data4'] = row.mean_std
+            bean['data5'] = row.mean_std
             # bean['data3'] = row.mean
             # bean['data4'] = row.mean_std
             # bean['data5'] = row.mean_std
@@ -152,6 +152,6 @@ if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
     dateS = 0
-    detaE = (dateS + 1) + 4
-    piaDB.getRen(dateS,detaE,15)
+    detaE = (dateS + 1) + 3
+    piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)
