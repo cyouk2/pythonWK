@@ -17,7 +17,7 @@ class SalesforceAccessNew:
             'client_id': config.get(database,'client_id'),
             'client_secret': config.get(database,'client_secret'),
             'username': config.get(database,'username'),
-            'password': config.get(database,'password')
+            'password': config.get(database,'password') + config.get(database,'token')
         }
         print(params['username'])   
         res_post = requests.post('https://{}/services/oauth2/token'.format(HOST), params=params)
