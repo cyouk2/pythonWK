@@ -203,11 +203,7 @@ with ThreadPoolExecutor(max_workers=8) as t:
         d.click(873, 615)
         time.sleep(3)
         strTaiNo = strTaiNo + 1
-        # if strTaiNo == 576:
-        #     time.sleep(1)
-        #     piaDB = PiaDBNew()
-        #     piaDB.getRen(adate,1)
-        #     strTaiNo = 585
+        
 # 连续数计算
 time.sleep(5)
 piaDB = PiaDBNew()
