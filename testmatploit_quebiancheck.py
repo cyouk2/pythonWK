@@ -133,9 +133,10 @@ class matploitTempTest02:
         for row in dfbean.itertuples():
             bean ={}
             bean['Name'] = row.Name
-            # bean['data3'] = row.mean
-            bean['data5'] = row.mean_std
-            # bean['data3'] = row.mean
+            bean['data3'] = row.mean
+            bean['data4'] = row.mean_std
+            bean['data5'] = row.count
+            print(row.count)
             # bean['data4'] = row.mean_std
             # bean['data5'] = row.mean_std
             listFor585.append(str(bean))
@@ -153,5 +154,5 @@ if __name__ == '__main__':
     piaDB = matploitTempTest02()
     dateS = 0
     detaE = (dateS + 1) + 3
-    piaDB.getRen(dateS,detaE,17)
+    piaDB.getRen(dateS,detaE,15)
     # piaDB.pltShow(592,350,adate)
