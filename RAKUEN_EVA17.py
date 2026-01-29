@@ -65,7 +65,7 @@ def getDataForPage(driver,strTaiNo,adate,first_num):
         print(datatp)
         saveLastStartData(datatp)
 
-def getDataForBan(driver,strTaiNo,adate):
+def getDataForBan(driver,strTaiNo,adate,dateFlg):
     xpath = f"//div[@class='daiban' and text()='{strTaiNo}']"
 
     # 番台
@@ -79,9 +79,11 @@ def getDataForBan(driver,strTaiNo,adate):
     element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
     element.click()
 
-    # 7日前
+    
+    xpath2 = f"//*[@class='date_link']//*[text()='{dateFlg}']"
     wairForRandom()
-    element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='7日前']")
+    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='3日前']")
+    element = driver.find_element(By.XPATH, xpath2)
     element.click()
 
     # 大当り回数 X回
@@ -138,16 +140,27 @@ print(menu_link_elements1[11].text)
 menu_link_elements1[11].click()
 # daiban
 # daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
-
-adate = getFormatDate(7)
-print(adate)
+###########################################################################################################################################
+dateFlg = 6
 strTaiNoT = 898
+
+
+
+
+###########################################################################################################################################
+dateFlgT = '前日'
+if dateFlg > 1:
+    dateFlgT =f"{dateFlg}日前"
+adate = getFormatDate(dateFlg)
+print(adate)
 # if strTaiNoT > 970:
 #     wairForRandom()
 #     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
 #     element.click()
 for strTaiNo in range(strTaiNoT,941):
-    getDataForBan(driver,strTaiNo,adate)
+    if strTaiNo in range(912,927):
+        continue
+    getDataForBan(driver,strTaiNo,adate,dateFlgT)
     # if strTaiNo == 970:
     #     wairForRandom()
     #     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
