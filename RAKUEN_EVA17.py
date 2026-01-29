@@ -13,7 +13,7 @@ import random
 import re
 
 def wairForRandom():
-   time.sleep(random.randint(1,3))
+   time.sleep(random.randint(1,6))
 
 def getFormatDate(dindex):
     datetimetmpEnd = datetime.now() - timedelta(days=dindex)
@@ -141,7 +141,7 @@ menu_link_elements1[11].click()
 
 adate = getFormatDate(7)
 print(adate)
-strTaiNoT = 890
+strTaiNoT = 898
 # if strTaiNoT > 970:
 #     wairForRandom()
 #     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")

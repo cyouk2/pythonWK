@@ -141,7 +141,7 @@ menu_link_elements1[11].click()
 
 adate = getFormatDate(3)
 print(adate)
-strTaiNoT = 941
+strTaiNoT = 967
 if strTaiNoT > 970:
     wairForRandom()
     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
