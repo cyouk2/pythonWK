@@ -75,9 +75,9 @@ def getDataForBan(driver,strTaiNo,adate,dateFlg):
     daiban_els.click()
 
     # ＞＞
-    wairForRandom()
-    element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
-    element.click()
+    # wairForRandom()
+    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
+    # element.click()
 
     
     xpath2 = f"//*[@class='date_link']//*[text()='{dateFlg}']"
@@ -141,7 +141,7 @@ menu_link_elements1[11].click()
 # daiban
 # daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
 ###########################################################################################################################################
-dateFlg = 6
+dateFlg = 3
 strTaiNoT = 898
 
 
