@@ -13,13 +13,14 @@ import random
 import re
 
 def wairForRandom():
-   time.sleep(random.randint(1,3))
-
+   time.sleep(random.randint(3,6))
+# getFormatDate
 def getFormatDate(dindex):
     datetimetmpEnd = datetime.now() - timedelta(days=dindex)
     adateEnd = int(datetimetmpEnd.strftime("%y%m%d"))
     return adateEnd
 
+# saveLastStartData
 def saveLastStartData(data):
     adate,strTaiNo,asort,orgkaiten,atype = data
     # # 打开数据库连接
@@ -32,7 +33,15 @@ def saveLastStartData(data):
     cursor.execute(sql, (adate,strTaiNo,asort,orgkaiten,atype,orgkaiten,orgkaiten,orgkaiten))
     db.commit()
     db.close()
+# 次へ
+def goToNextPage(driver):
+    wairForRandom()
+    element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
+    print(element.text)
+    element.click()
 
+
+# getDataForPage
 def getDataForPage(driver,strTaiNo,adate,first_num):
     # 大当り履歴データ
     wairForRandom()
@@ -68,55 +77,50 @@ def getDataForPage(driver,strTaiNo,adate,first_num):
 def getDataForBan(driver,strTaiNo,adate,dateFlg):
     xpath = f"//div[@class='daiban' and text()='{strTaiNo}']"
 
-    # 番台
-    daiban_els = driver.find_element(By.XPATH, xpath)
+    # 番台を押下する
     wairForRandom()
+    daiban_els = driver.find_element(By.XPATH, xpath)
     print(daiban_els.text)
     daiban_els.click()
 
-    # ＞＞
+    # ＞＞を押下する
     # wairForRandom()
     # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
     # element.click()
 
-    # 7日前
-    
+    # Ｘ日前を押下する
     xpath2 = f"//*[@class='date_link']//*[text()='{dateFlg}']"
     wairForRandom()
-    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='3日前']")
     element = driver.find_element(By.XPATH, xpath2)
     element.click()
 
     # 大当り回数 X回
     wairForRandom()
     daiban_els = driver.find_element(By.CSS_SELECTOR, '.sort_order')
-    daiban_els_text = daiban_els.text
-    print(daiban_els_text)
-    first_num = int(re.search(r'\d+', daiban_els_text).group())
+    print(daiban_els.text)
+    first_num = int(re.search(r'\d+', daiban_els.text).group())
+
+    # 画面データ取得
     getDataForPage(driver,strTaiNo,adate,first_num)
 
     # 次へ
     for i in range(5):
         try:
-            wairForRandom()
-            element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-            print(element.text)
-            element.click()
+            goToNextPage(driver)
+            # 画面データ取得
             getDataForPage(driver,strTaiNo,adate,first_num)
         except NoSuchElementException:
             print('NoSuchElementException')
             break
 
     # 戻る
-    # print('戻る')
     wairForRandom()
     element = driver.find_element(By.XPATH, "//*[@id='footer']/a[text()='戻る']")
     print('戻る')
     element.click()
     if strTaiNo > 970:
-        wairForRandom()
-        element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-        element.click()
+        # ９７０以降のデータは次の画面にあるから
+        goToNextPage(driver)
 ###########################################################################################################################################
 
 driver = webdriver.Chrome()
@@ -143,8 +147,8 @@ menu_link_elements1[11].click()
 # daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
 
 ###########################################################################################################################################
-dateFlg = 3
-strTaiNoT = 967
+dateFlg = 2
+strTaiNoT = 941
 
 
 

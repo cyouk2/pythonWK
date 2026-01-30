@@ -141,7 +141,7 @@ menu_link_elements1[11].click()
 # daiban
 # daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
 ###########################################################################################################################################
-dateFlg = 3
+dateFlg = 1
 strTaiNoT = 898
 
 

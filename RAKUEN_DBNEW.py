@@ -71,5 +71,5 @@ class RAKUENDBNew:
 
 if __name__ == '__main__':  
     piaDB = RAKUENDBNew()
-    piaDB.countRenSub(943, 260123)
+    piaDB.countRenSub(944, 260122)
     # piaDB.getRen(260111,2)
