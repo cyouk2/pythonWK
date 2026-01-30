@@ -37,9 +37,14 @@ def saveLastStartData(data):
 def goToNextPage(driver):
     wairForRandom()
     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-    print(element.text)
+    print('次へ')
     element.click()
 
+# goToCommon
+def goToCommon(driver, xpath2):
+    wairForRandom()
+    element = driver.find_element(By.XPATH, xpath2)
+    element.click()
 
 # getDataForPage
 def getDataForPage(driver,strTaiNo,adate,first_num):
@@ -75,29 +80,29 @@ def getDataForPage(driver,strTaiNo,adate,first_num):
         saveLastStartData(datatp)
 
 def getDataForBan(driver,strTaiNo,adate,dateFlg):
-    xpath = f"//div[@class='daiban' and text()='{strTaiNo}']"
+
+    # 番台
+    xpath_strTaiNo = f"//div[@class='daiban' and text()='{strTaiNo}']"
+    # 戻る
+    xpath_return = "//*[@id='footer']/a[text()='戻る']"
+    # Ｘ日前を押下する
+    xpath_dateFlg = f"//*[@class='date_link']//*[text()='{dateFlg}']"
 
     # 番台を押下する
-    wairForRandom()
-    daiban_els = driver.find_element(By.XPATH, xpath)
-    print(daiban_els.text)
-    daiban_els.click()
-
+    goToCommon(driver, xpath_strTaiNo)
     # ＞＞を押下する
     # wairForRandom()
     # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
     # element.click()
 
     # Ｘ日前を押下する
-    xpath2 = f"//*[@class='date_link']//*[text()='{dateFlg}']"
-    wairForRandom()
-    element = driver.find_element(By.XPATH, xpath2)
-    element.click()
+    goToCommon(driver, xpath_dateFlg)
 
     # 大当り回数 X回
     wairForRandom()
     daiban_els = driver.find_element(By.CSS_SELECTOR, '.sort_order')
     print(daiban_els.text)
+    # 大当り回数
     first_num = int(re.search(r'\d+', daiban_els.text).group())
 
     # 画面データ取得
@@ -110,14 +115,11 @@ def getDataForBan(driver,strTaiNo,adate,dateFlg):
             # 画面データ取得
             getDataForPage(driver,strTaiNo,adate,first_num)
         except NoSuchElementException:
-            print('NoSuchElementException')
             break
 
     # 戻る
-    wairForRandom()
-    element = driver.find_element(By.XPATH, "//*[@id='footer']/a[text()='戻る']")
+    goToCommon(driver, xpath_return)
     print('戻る')
-    element.click()
     if strTaiNo > 970:
         # ９７０以降のデータは次の画面にあるから
         goToNextPage(driver)
@@ -143,34 +145,27 @@ wairForRandom()
 print(menu_link_elements1[11].text)
 # 大当り履歴データ
 menu_link_elements1[11].click()
-# daiban
-# daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
 
 ###########################################################################################################################################
-dateFlg = 2
+dateFlg = 1
 strTaiNoT = 941
-
-
-
-
 ###########################################################################################################################################
 dateFlgT = '前日'
 if dateFlg > 1:
     dateFlgT =f"{dateFlg}日前"
 
+print(dateFlgT)
 adate = getFormatDate(dateFlg)
 print(adate)
+
 if strTaiNoT > 970:
-    wairForRandom()
-    element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-    element.click()
+    # 次へ
+    goToNextPage(driver)
 for strTaiNo in range(strTaiNoT,981):
+    # 台移動
     getDataForBan(driver,strTaiNo,adate,dateFlgT)
     if strTaiNo == 970:
-        wairForRandom()
-        element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-        print(element.text)
-        element.click()
+        # 次へ
+        goToNextPage(driver)
 
 print('OK')
-time.sleep(20)
