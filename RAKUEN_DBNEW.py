@@ -12,7 +12,7 @@ class RAKUENDBNew:
         # 使用 cursor() 方法创建一个游标对象 cursor
         cursor = db.cursor()
         # SQL
-        sql02 = 'UPDATE piadata__c set aren = %s,kaiten= %s, isProcessed = 1 where adate= %s and Name= %s and asort= %s and isProcessed IS NULL' 
+        sql02 = 'UPDATE piadata__c set aren = %s,kaiten= %s, isProcessed = 1 where adate= %s and Name= %s and asort= %s and isProcessed IS NULL ' 
         # save
         cursor.execute(sql02, (aren,kaiten,adate,Name,asort))
         db.commit()
@@ -22,35 +22,45 @@ class RAKUENDBNew:
         engine = create_engine('mysql+pymysql://root:541880qw@localhost/pia?charset=utf8')
         params = {'name': indexTaiNo,'adate':adateTmp}
         # sql 命令
-        sql_cmd = '''SELECT adate,Name,asort,orgkaiten,atype,aren FROM pia.piadata__c 
+        sql_cmd = '''SELECT adate,Name,asort,orgkaiten,kaiten,atype,aren,isProcessed FROM pia.piadata__c 
             WHERE name = %(name)s 
             AND adate = %(adate)s
             AND atype IN (1,2) 
             ORDER BY adate, asort desc'''
         # データを読み込み
         df = pd.read_sql(sql=sql_cmd%params, con=engine)
-        print(df)
         # print(sql_cmd%params)
         df['asortbk'] = df.shift(periods=1)['asort']
         df.fillna(0, inplace = True)
         rows = df.shape[0]
-        print(df)
-        # # 保存到DB
-        # # lastStart计算
-        # tmp = df.iloc[0, 3]
-        # # print(tmp)
-        # for row1 in range(rows):
-        #     if df.iloc[row1, 4] != 2:
-        #         tmp = tmp - df.iloc[row1, 3]
-        #         # print(tmp)
+
         for row in range(rows):
             # 最終スタートの場合
-            if df.iloc[row, 4] == 2:
-                df.iloc[row, 5] = 0
+            if df.loc[row, 'atype'] == 2:
+                df.loc[row, 'aren'] = 0
             else:
-                df.iloc[row, 5] = df.iloc[row, 6] - df.iloc[row, 2]
-          
-            self.updateRenData(df.iloc[row, 5],df.iloc[row, 3],adateTmp,indexTaiNo,df.iloc[row, 2])
+                df.loc[row, 'aren'] = df.loc[row, 'asortbk'] - df.loc[row, 'asort']
+
+        for row in range(rows):
+            # 最終スタートの場合
+            if df.loc[row, 'atype'] == 2:
+                df.loc[row, 'aren'] = 0
+                if rows > 1:
+                    if df.loc[row + 1, 'aren'] > 1:
+                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 167
+                    else:
+                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 100
+                else:
+                    df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
+            else:
+                if row == rows - 1:
+                    df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
+                else:
+                    if df.loc[row + 1, 'aren'] > 1:
+                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 167
+                    else:
+                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 100
+            self.updateRenData(df.loc[row, 'aren'],df.loc[row, 'kaiten'],adateTmp,indexTaiNo,df.loc[row, 'asort'])
         # print(df)
         print(df)
         return df
@@ -71,5 +81,5 @@ class RAKUENDBNew:
 
 if __name__ == '__main__':  
     piaDB = RAKUENDBNew()
-    piaDB.countRenSub(944, 260122)
+    piaDB.countRenSub(943, 260122)
     # piaDB.getRen(260111,2)
