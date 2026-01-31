@@ -92,12 +92,16 @@ class matploitTempTest02:
         bean['count'] = []
         
         
-        rang1 = range(585,613)
-        if flg == 15:
-            rang1 = range(697,725)
+        rang1 = range(941,981)
+        if flg == 17:
+            rang1 = range(898,941)
 
         for indexTaiNo4 in rang1:
-            
+            if flg == 17:
+                if indexTaiNo4 in range(912,927):
+                    continue
+            if indexTaiNo4 == 965:
+                continue
             df = self.processData(indexTaiNo4)
             
             dfgroupbybk = df.copy().groupby('adate', as_index=False).agg('max').sort_values(by='adate', ascending=False)
@@ -126,17 +130,18 @@ class matploitTempTest02:
             bean['mean_std'].append(mean + std)
             print(f"{indexTaiNo4} :  {adateStart} ~ {adateEnd},count:{df_kaiten.count()},mean_std:{mean + std}")
 
+
+        # print(bean)
         # DataFrameへ変更
         dfbean = pd.DataFrame(bean)
-        # print(dfbean)
+        print(dfbean)
         listFor585 =[]
         for row in dfbean.itertuples():
             bean ={}
             bean['Name'] = row.Name
-            bean['data3'] = row.mean
-            bean['data4'] = row.mean_std
-            bean['data5'] = row.count
-            print(row.count)
+            bean['data1'] = row.mean
+            bean['data2'] = row.mean_std
+            bean['data3'] = row.count
             # bean['data4'] = row.mean_std
             # bean['data5'] = row.mean_std
             listFor585.append(str(bean))
@@ -153,6 +158,6 @@ if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
     dateS = 0
-    detaE = (dateS + 1) + 3
+    detaE = (dateS + 1) + 2
     piaDB.getRen(dateS,detaE,15)
     # piaDB.pltShow(592,350,adate)

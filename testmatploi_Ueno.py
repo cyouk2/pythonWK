@@ -119,9 +119,9 @@ class matploitTempTest:
         
     def getRen(self,cntbig,cntsmall,isToday,adate):
         listFor585 =[]
-        for indexTaiNo4 in range(1062,1077):
-            # if indexTaiNo4 in [585,594]:
-            #     continue
+        for indexTaiNo4 in range(898,941):
+            if indexTaiNo4 in range(912,927):
+                continue
             listFor585.append(self.processData(indexTaiNo4,cntbig,cntsmall,adate))
         # salesforce连携
         sa2 = SalesforceAccessNew('EVA17')
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     piaDB = matploitTempTest()
     datetimetmp = datetime.now() - timedelta(days=1)
     adate = int(datetimetmp.strftime("%y%m%d"))
-    piaDB.getRen(30,30,1,adate)
+    piaDB.getRen(20,20,1,adate)
     # piaDB.processData(596,30,15,adate)
     # datetimetmp = datetime.now() - timedelta(days=2)
     # adate = int(datetimetmp.strftime("%y%m%d"))
