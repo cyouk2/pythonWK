@@ -18,11 +18,21 @@ class RAKUENDBNew:
         db.commit()
         db.close()
 
-    def countRenSub(self, indexTaiNo, adateTmp):
+    def ifzero(self,data):
+        if data < 0:
+            return 0
+        else:
+            return data
+
+    def countRenSub(self, indexTaiNo, adateTmp, flg):
+        stdata = 163
+        if flg == 2:
+            stdata = 157
+        pd.set_option('future.no_silent_downcasting', True)
         engine = create_engine('mysql+pymysql://root:541880qw@localhost/pia?charset=utf8')
         params = {'name': indexTaiNo,'adate':adateTmp}
         # sql 命令
-        sql_cmd = '''SELECT adate,Name,asort,orgkaiten,kaiten,atype,aren,isProcessed FROM pia.piadata__c 
+        sql_cmd = '''SELECT adate,Name,asort,orgkaiten,kaiten,atype,aren FROM pia.piadata__c 
             WHERE name = %(name)s 
             AND adate = %(adate)s
             AND atype IN (1,2) 
@@ -47,9 +57,9 @@ class RAKUENDBNew:
                 df.loc[row, 'aren'] = 0
                 if rows > 1:
                     if df.loc[row + 1, 'aren'] > 1:
-                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 167
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - stdata)
                     else:
-                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 100
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - 100)
                 else:
                     df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
             else:
@@ -57,9 +67,9 @@ class RAKUENDBNew:
                     df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
                 else:
                     if df.loc[row + 1, 'aren'] > 1:
-                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 167
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - stdata)
                     else:
-                        df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten'] - 100
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - 100)
             self.updateRenData(df.loc[row, 'aren'],df.loc[row, 'kaiten'],adateTmp,indexTaiNo,df.loc[row, 'asort'])
         # print(df)
         print(df)
@@ -68,18 +78,22 @@ class RAKUENDBNew:
     def getRen(self, adateTmp, flg):
         if flg == 1:
             sa1 = SalesforceAccessNew('EVA15')
-            for indexTaiNo1 in range(697,725):
-                df1 = self.countRenSub(indexTaiNo1, adateTmp)
+            for indexTaiNo1 in range(941,981):
+                df1 = self.countRenSub(indexTaiNo1, adateTmp, flg)
                 # salesforce连携
-                # sa1.main(df1)
+                sa1.main(df1)
         if flg == 2:
             sa2 = SalesforceAccessNew('EVA17')
-            for indexTaiNo2 in range(585,613):
+            for indexTaiNo2 in range(898,941):
+                if indexTaiNo2 in range(912,927):
+                    continue
                 # salesforce连携
-                df2 = self.countRenSub(indexTaiNo2, adateTmp)
-                # sa2.main(df2)
+                df2 = self.countRenSub(indexTaiNo2, adateTmp, flg)
+                sa2.main(df2)
 
 if __name__ == '__main__':  
     piaDB = RAKUENDBNew()
-    piaDB.countRenSub(943, 260122)
-    # piaDB.getRen(260111,2)
+    # piaDB.countRenSub(941, 260122)
+    
+    # for date in range(260122,260130):
+    piaDB.getRen(260130,2)

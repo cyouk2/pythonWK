@@ -41,12 +41,12 @@ class SalesforceAccessNew:
         beans =[]
         for row in range(df.shape[0]):
             bean ={}
-            bean['adate'] = int(df.iloc[row, 0])
-            bean['Name'] = int(df.iloc[row, 1])
-            bean['asort'] = int(df.iloc[row, 2])
-            bean['kaiten'] = int(df.iloc[row, 3])
-            bean['atype'] = int(df.iloc[row, 4])
-            bean['aren'] = int(df.iloc[row, 5])
+            bean['adate'] = int(df.loc[row, 'adate'])
+            bean['Name'] = int(df.loc[row, 'Name'])
+            bean['asort'] = int(df.loc[row, 'asort'])
+            bean['kaiten'] = int(df.loc[row, 'kaiten'])
+            bean['atype'] = int(df.loc[row, 'atype'])
+            bean['aren'] = int(df.loc[row, 'aren'])
             beans.append(bean)
         obj = {
             'beans':beans
