@@ -1,12 +1,13 @@
 # -*- coding: UTF-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.wait import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from datetime import datetime, timedelta
-from PiaDataReadNew import PiaDataPicNew
-from PiaDBAccessNew import PiaDBNew
+# from PiaDataReadNew import PiaDataPicNew
+# from PiaDBAccessNew import PiaDBNew
+from RAKUEN_DBNEW import RAKUENDBNew
 import pymysql
 import time
 import random
@@ -168,4 +169,7 @@ for strTaiNo in range(strTaiNoT,941):
     #     element.click()
 
 print('OK')
+wairForRandom()
+piaDB = RAKUENDBNew()
+piaDB.getRen(adate,2)
 time.sleep(20)
