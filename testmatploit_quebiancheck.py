@@ -139,10 +139,10 @@ class matploitTempTest02:
         for row in dfbean.itertuples():
             bean ={}
             bean['Name'] = row.Name
-            bean['data1'] = row.mean
-            bean['data2'] = row.mean_std
-            bean['data3'] = row.count
-            # bean['data4'] = row.mean_std
+            # bean['data1'] = row.mean
+            # bean['data2'] = row.mean_std
+            # bean['data3'] = row.count
+            bean['data5'] = row.mean_std
             # bean['data5'] = row.mean_std
             listFor585.append(str(bean))
         # SalesforceAccess
@@ -158,6 +158,6 @@ if __name__ == '__main__':
 
     piaDB = matploitTempTest02()
     dateS = 0
-    detaE = (dateS + 1) + 2
-    piaDB.getRen(dateS,detaE,15)
+    detaE = (dateS + 1) + 3
+    piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)
