@@ -14,7 +14,7 @@ import random
 import re
 
 def wairForRandom():
-   time.sleep(random.randint(1,6))
+   time.sleep(random.randint(3,7))
 
 def getFormatDate(dindex):
     datetimetmpEnd = datetime.now() - timedelta(days=dindex)
@@ -123,24 +123,23 @@ driver = webdriver.Chrome()
 driver.set_window_size(1920, 1080)
 driver.set_window_position(0, 0)
 driver.get('https://www.d-deltanet.com/pc/D0301.do?pmc=22021004&clc=01&urt=400&pan=1')
-time.sleep(5)
+# 承諾
+wairForRandom()
+element = driver.find_element(By.XPATH, "//*[@class='overlay-cookie-policy']/div[@class='agree']")
+element.click()
 
-model_link_element = driver.find_element(By.ID, "model_link")
-model_link_elements = model_link_element.find_elements(By.TAG_NAME, 'a')
-print(model_link_elements[2].text)
 # ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]
-model_link_elements[2].click()
 wairForRandom()
+element = driver.find_element(By.XPATH, "//*[@id='model_link']//*[text()='ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]']")
+print(element.text)
+element.click()
 
-menu_link_element1 = driver.find_element(By.ID, "menu_link")
-menu_link_elements1 = menu_link_element1.find_elements(By.TAG_NAME, 'a')
-
-wairForRandom()
-print(menu_link_elements1[11].text)
 # 大当り履歴データ
-menu_link_elements1[11].click()
-# daiban
-# daiban_els = driver.find_element(By.CSS_SELECTOR, '.daiban')
+wairForRandom()
+element = driver.find_element(By.XPATH, "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]")
+print(element.text)
+element.click()
+
 ###########################################################################################################################################
 dateFlg = 1
 strTaiNoT = 898

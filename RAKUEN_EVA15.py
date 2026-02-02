@@ -129,22 +129,23 @@ driver = webdriver.Chrome()
 driver.set_window_size(1920, 1080)
 driver.set_window_position(0, 0)
 driver.get('https://www.d-deltanet.com/pc/D0301.do?pmc=22021004&clc=01&urt=400&pan=1')
-time.sleep(5)
 
-model_link_element = driver.find_element(By.ID, "model_link")
-model_link_elements = model_link_element.find_elements(By.TAG_NAME, 'a')
-print(model_link_elements[1].text)
-# ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]
-model_link_elements[1].click()
+# 承諾
 wairForRandom()
+element = driver.find_element(By.XPATH, "//*[@class='overlay-cookie-policy']/div[@class='agree']")
+element.click()
 
-menu_link_element1 = driver.find_element(By.ID, "menu_link")
-menu_link_elements1 = menu_link_element1.find_elements(By.TAG_NAME, 'a')
-
+# P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
 wairForRandom()
-print(menu_link_elements1[11].text)
+element = driver.find_element(By.XPATH, "//*[@id='model_link']//*[text()='P新世紀エヴァンゲリオン１５　未来への咆哮 [40]']")
+print(element.text)
+element.click()
+
 # 大当り履歴データ
-menu_link_elements1[11].click()
+wairForRandom()
+element = driver.find_element(By.XPATH, "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]")
+print(element.text)
+element.click()
 
 ###########################################################################################################################################
 dateFlg = 1
