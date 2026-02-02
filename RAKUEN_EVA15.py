@@ -87,17 +87,13 @@ def getDataForBan(driver,strTaiNo,adate,dateFlg):
     xpath_return = "//*[@id='footer']/a[text()='戻る']"
     # Ｘ日前を押下する
     xpath_dateFlg = f"//*[@class='date_link']//*[text()='{dateFlg}']"
+    # ＞＞
+    # xpath_NEXT = "//*[@class='date_link']//*[text()='＞＞']"
 
     # 番台を押下する
     goToCommon(driver, xpath_strTaiNo)
-    # ＞＞を押下する
-    # wairForRandom()
-    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
-    # element.click()
-
     # Ｘ日前を押下する
     goToCommon(driver, xpath_dateFlg)
-
     # 大当り回数 X回
     wairForRandom()
     daiban_els = driver.find_element(By.CSS_SELECTOR, '.sort_order')
@@ -130,32 +126,32 @@ driver.set_window_size(1920, 1080)
 driver.set_window_position(0, 0)
 driver.get('https://www.d-deltanet.com/pc/D0301.do?pmc=22021004&clc=01&urt=400&pan=1')
 
+########################################################### xpath ##########################################################################
 # 承諾
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@class='overlay-cookie-policy']/div[@class='agree']")
-element.click()
+xpath_agree = "//*[@class='overlay-cookie-policy']/div[@class='agree']"
+# P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
+xpath_EVAXX = "//*[@id='model_link']//*[text()='P新世紀エヴァンゲリオン１５　未来への咆哮 [40]']"
+# 大当り履歴データ
+xpath_BONUSHIS = "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]"
+
+# 承諾
+goToCommon(driver, xpath_agree)
 
 # P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@id='model_link']//*[text()='P新世紀エヴァンゲリオン１５　未来への咆哮 [40]']")
-print(element.text)
-element.click()
+goToCommon(driver, xpath_EVAXX)
+print('P新世紀エヴァンゲリオン１５　未来への咆哮 [40]')
 
 # 大当り履歴データ
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]")
-print(element.text)
-element.click()
+goToCommon(driver, xpath_BONUSHIS)
 
 ###########################################################################################################################################
 dateFlg = 1
 strTaiNoT = 941
 ###########################################################################################################################################
 dateFlgT = '前日'
-if dateFlg > 1:
-    dateFlgT =f"{dateFlg}日前"
-
+dateFlgT = f"{dateFlg}日前" if dateFlg > 1 else dateFlgT
 print(dateFlgT)
+
 adate = getFormatDate(dateFlg)
 print(adate)
 

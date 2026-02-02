@@ -21,6 +21,12 @@ def getFormatDate(dindex):
     adateEnd = int(datetimetmpEnd.strftime("%y%m%d"))
     return adateEnd
 
+# goToCommon
+def goToCommon(driver, xpath2):
+    wairForRandom()
+    element = driver.find_element(By.XPATH, xpath2)
+    element.click()
+
 def saveLastStartData(data):
     adate,strTaiNo,asort,orgkaiten,atype = data
     # # 打开数据库连接
@@ -67,25 +73,17 @@ def getDataForPage(driver,strTaiNo,adate,first_num):
         saveLastStartData(datatp)
 
 def getDataForBan(driver,strTaiNo,adate,dateFlg):
-    xpath = f"//div[@class='daiban' and text()='{strTaiNo}']"
-
     # 番台
-    daiban_els = driver.find_element(By.XPATH, xpath)
-    wairForRandom()
-    print(daiban_els.text)
-    daiban_els.click()
+    xpath_daiban = f"//div[@class='daiban' and text()='{strTaiNo}']"
+    xpath_date = f"//*[@class='date_link']//*[text()='{dateFlg}']"
+    xpath_next = "//*[@class='list_navigation']/div/a[text()='次へ']"
+    xpath_return = "//*[@id='footer']/a[text()='戻る']"
 
-    # ＞＞
-    # wairForRandom()
-    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='＞＞']")
-    # element.click()
+    # X日前
+    goToCommon(driver, xpath_daiban)
 
-    
-    xpath2 = f"//*[@class='date_link']//*[text()='{dateFlg}']"
-    wairForRandom()
-    # element = driver.find_element(By.XPATH, "//*[@class='date_link']//*[text()='3日前']")
-    element = driver.find_element(By.XPATH, xpath2)
-    element.click()
+    # X日前
+    goToCommon(driver, xpath_date)
 
     # 大当り回数 X回
     wairForRandom()
@@ -93,15 +91,15 @@ def getDataForBan(driver,strTaiNo,adate,dateFlg):
     daiban_els_text = daiban_els.text
     print(daiban_els_text)
     first_num = int(re.search(r'\d+', daiban_els_text).group())
+    # getDataForPage
     getDataForPage(driver,strTaiNo,adate,first_num)
 
     # 次へ
     for i in range(5):
         try:
-            wairForRandom()
-            element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-            print(element.text)
-            element.click()
+            goToCommon(driver, xpath_next)
+            print('次へ')
+            # getDataForPage
             getDataForPage(driver,strTaiNo,adate,first_num)
         except NoSuchElementException:
             print('NoSuchElementException')
@@ -109,63 +107,45 @@ def getDataForBan(driver,strTaiNo,adate,dateFlg):
 
     # 戻る
     # print('戻る')
-    wairForRandom()
-    element = driver.find_element(By.XPATH, "//*[@id='footer']/a[text()='戻る']")
+    goToCommon(driver, xpath_return)
     print('戻る')
-    element.click()
-    # if strTaiNo > 970:
-    #     wairForRandom()
-    #     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-    #     element.click()
 ###########################################################################################################################################
 
 driver = webdriver.Chrome()
 driver.set_window_size(1920, 1080)
 driver.set_window_position(0, 0)
 driver.get('https://www.d-deltanet.com/pc/D0301.do?pmc=22021004&clc=01&urt=400&pan=1')
-# 承諾
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@class='overlay-cookie-policy']/div[@class='agree']")
-element.click()
 
-# ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@id='model_link']//*[text()='ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]']")
-print(element.text)
-element.click()
+# 承諾
+xpath_agree = "//*[@class='overlay-cookie-policy']/div[@class='agree']"
+# P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
+xpath_EVAXX = "//*[@id='model_link']//*[text()='ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]']"
+# 大当り履歴データ
+xpath_BONUSHIS = "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]"
+
+# 承諾
+goToCommon(driver, xpath_agree)
+
+# P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
+goToCommon(driver, xpath_EVAXX)
+print('ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]')
 
 # 大当り履歴データ
-wairForRandom()
-element = driver.find_element(By.XPATH, "//*[@id='menu_link']//*[contains(text(), '大当り履歴データ')]")
-print(element.text)
-element.click()
-
+goToCommon(driver, xpath_BONUSHIS)
 ###########################################################################################################################################
 dateFlg = 1
 strTaiNoT = 898
-
-
-
-
 ###########################################################################################################################################
 dateFlgT = '前日'
-if dateFlg > 1:
-    dateFlgT =f"{dateFlg}日前"
+dateFlgT = f"{dateFlg}日前" if dateFlg > 1 else dateFlgT
 adate = getFormatDate(dateFlg)
 print(adate)
-# if strTaiNoT > 970:
-#     wairForRandom()
-#     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-#     element.click()
+
 for strTaiNo in range(strTaiNoT,941):
     if strTaiNo in range(912,927):
         continue
+    # getDataForBan
     getDataForBan(driver,strTaiNo,adate,dateFlgT)
-    # if strTaiNo == 970:
-    #     wairForRandom()
-    #     element = driver.find_element(By.XPATH, "//*[@class='list_navigation']/div/a[text()='次へ']")
-    #     print(element.text)
-    #     element.click()
 
 print('OK')
 wairForRandom()
