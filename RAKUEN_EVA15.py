@@ -13,7 +13,7 @@ import random
 import re
 
 def wairForRandom():
-   time.sleep(random.randint(3,6))
+   time.sleep(random.randint(2,5))
 # getFormatDate
 def getFormatDate(dindex):
     datetimetmpEnd = datetime.now() - timedelta(days=dindex)

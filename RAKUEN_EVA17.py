@@ -126,7 +126,7 @@ xpath_BONUSHIS = "//*[@id='menu_link']//*[contains(text(), '大当り履歴デ�
 # 承諾
 goToCommon(driver, xpath_agree)
 
-# P新世紀エヴァンゲリオン１５　未来への咆哮 [40]
+# ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]
 goToCommon(driver, xpath_EVAXX)
 print('ｅ 新世紀エヴァンゲリオン ～はじまりの記憶～ [28]')
 
