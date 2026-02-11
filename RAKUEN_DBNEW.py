@@ -18,11 +18,12 @@ class RAKUENDBNew:
         db.commit()
         db.close()
 
-    def ifzero(self,data):
-        if data < 0:
-            return 0
-        else:
+    def ifzero(self, data, data1):
+        data3 = data - data1
+        if data3 < 0:
             return data
+        else:
+            return data3
 
     def countRenSub(self, indexTaiNo, adateTmp, flg):
         stdata = 163
@@ -57,9 +58,9 @@ class RAKUENDBNew:
                 df.loc[row, 'aren'] = 0
                 if rows > 1:
                     if df.loc[row + 1, 'aren'] > 1:
-                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - stdata)
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] , stdata)
                     else:
-                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - 100)
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] , 100)
                 else:
                     df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
             else:
@@ -67,9 +68,9 @@ class RAKUENDBNew:
                     df.loc[row, 'kaiten'] = df.loc[row, 'orgkaiten']
                 else:
                     if df.loc[row + 1, 'aren'] > 1:
-                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - stdata)
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] , stdata)
                     else:
-                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] - 100)
+                        df.loc[row, 'kaiten'] = self.ifzero(df.loc[row, 'orgkaiten'] , 100)
             self.updateRenData(df.loc[row, 'aren'],df.loc[row, 'kaiten'],adateTmp,indexTaiNo,df.loc[row, 'asort'])
         # print(df)
         print(df)

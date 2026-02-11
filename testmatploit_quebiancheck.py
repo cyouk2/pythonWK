@@ -141,8 +141,8 @@ class matploitTempTest02:
             bean['Name'] = row.Name
             if endIndex == 2:
                 bean['data1'] = row.mean
-                bean['data2'] = row.mean_std
-                bean['data3'] = row.count
+                bean['data2'] = row.std
+                bean['data3'] = row.mean_std
             elif endIndex == 3:
                 bean['data4'] = row.mean_std
             elif endIndex == 4:
@@ -162,5 +162,5 @@ if __name__ == '__main__':
     piaDB = matploitTempTest02()
     dateS = 0
     for detaE in range(2,5):
-        piaDB.getRen(dateS,detaE,15)
+        piaDB.getRen(dateS,detaE,17)
     # piaDB.pltShow(592,350,adate)
